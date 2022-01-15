@@ -1,0 +1,116 @@
+.header {
+  position: relative;
+  &__img {
+    background-image: url(../images/header-img.jpg);
+    height: 50%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: flex;
+    background-position: 45% 65%;
+    background-position-x: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 4rem 1rem 4rem;
+    // width: 100%;
+    .title-1 {
+      font-family: $family-Luxurious;
+      font-size: 4rem;
+      padding-top: 1rem;
+
+      align-self: flex-start;
+    }
+    .title-2 {
+      font-family: $family-Luxurious;
+      font-size: 4rem;
+
+      align-self: flex-end;
+    }
+  }
+
+  &__search {
+    height: 50%;
+    background: rgb(0, 119, 182);
+    background: linear-gradient(183deg, rgba(0, 119, 182, 1) 0%);
+    box-shadow: inset -5px -15px 70px 32px rgba(255, 255, 255, 0.68);
+    display: flex;
+    align-items: flex-start;
+    padding-top: 3.2vh;
+    padding-left: 2rem;
+    label {
+      font-size: 3rem;
+      margin-right: 2rem;
+      font-family: $family-shadow;
+      word-spacing: -10px;
+      color: #fff;
+    }
+
+    .task-input {
+      padding: 1rem;
+      width: 60%;
+      font-family: $family-poppins;
+      border-radius: 5px;
+      border: 0;
+      transform: translateY(3px);
+    }
+
+    .fa-tasks {
+      color: #fff;
+      font-size: 3rem;
+
+      margin-left: 1.5rem;
+      transform: translateY(0.74rem);
+    }
+  }
+
+  &-sort {
+    background-color: rgb(255, 255, 255);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2rem;
+
+    height: 15%;
+    position: absolute;
+    bottom: 0px;
+    border-radius: 24px 24px 0px 0px;
+    width: 100%;
+    &__ideas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8de7e88;
+      font-family: $family-shadow;
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      border-radius: 24px 0px 0px 0px;
+      .fa-lightbulb {
+        margin-left: 1rem;
+      }
+    }
+    &__in-progress {
+      display: flex;
+      align-items: center;
+      background-color: #c5d6f88f;
+      justify-content: center;
+      font-family: $family-shadow;
+      letter-spacing: 3px;
+      font-size: 2.2rem;
+      .fa-hourglass-half {
+        margin-left: 1rem;
+      }
+    }
+    &__done {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #66e35d7e;
+
+      font-family: $family-shadow;
+      letter-spacing: 3px;
+      font-size: 2.2rem;
+      border-radius: 0px 24px 0px 0px;
+      .fa-clipboard-check {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

@@ -1,4 +1,213 @@
 @import url("https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=Poppins:wght@200;300;400;500;600;700&family=Shadows+Into+Light&display=swap");
-.nav-items {
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container-wrapper {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(312deg, #0077b6 0%, #caf0f8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container-wrapper .container {
+  width: 70%;
+  height: 70%;
+  background: #fff;
+  max-width: 80rem;
+  display: grid;
+  grid-template-areas: "side header header header" "side header header header" "side main main    main" "side main main    main" "side main main    main" "side main main    main";
+}
+
+.header {
+  grid-area: header;
+}
+
+.side-navbar {
+  grid-area: side;
+  background-color: red;
+}
+
+.task-main {
+  grid-area: main;
+  background-color: green;
+}
+
+.header {
+  position: relative;
+}
+.header__img {
+  background-image: url(../images/header-img.jpg);
+  height: 50%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: flex;
+  background-position: 45% 65%;
+  background-position-x: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 4rem 1rem 4rem;
+}
+.header__img .title-1 {
+  font-family: "Luxurious Roman", cursive;
+  font-size: 4rem;
+  padding-top: 1rem;
+  align-self: flex-start;
+}
+.header__img .title-2 {
+  font-family: "Luxurious Roman", cursive;
+  font-size: 4rem;
+  align-self: flex-end;
+}
+.header__search {
+  height: 50%;
+  background: #0077b6;
+  background: linear-gradient(183deg, #0077b6 0%);
+  box-shadow: inset -5px -15px 70px 32px rgba(255, 255, 255, 0.68);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 3.2vh;
+  padding-left: 2rem;
+}
+.header__search label {
+  font-size: 3rem;
+  margin-right: 2rem;
   font-family: "Shadows Into Light", cursive;
+  word-spacing: -10px;
+  color: #fff;
+}
+.header__search .task-input {
+  padding: 1rem;
+  width: 60%;
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+  border: 0;
+  transform: translateY(3px);
+}
+.header__search .fa-tasks {
+  color: #fff;
+  font-size: 3rem;
+  margin-left: 1.5rem;
+  transform: translateY(0.74rem);
+}
+.header-sort {
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 2rem;
+  height: 15%;
+  position: absolute;
+  bottom: 0px;
+  border-radius: 24px 24px 0px 0px;
+  width: 100%;
+}
+.header-sort__ideas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8de7e88;
+  font-family: "Shadows Into Light", cursive;
+  font-size: 2.2rem;
+  letter-spacing: 3px;
+  border-radius: 24px 0px 0px 0px;
+}
+.header-sort__ideas .fa-lightbulb {
+  margin-left: 1rem;
+}
+.header-sort__in-progress {
+  display: flex;
+  align-items: center;
+  background-color: #c5d6f88f;
+  justify-content: center;
+  font-family: "Shadows Into Light", cursive;
+  letter-spacing: 3px;
+  font-size: 2.2rem;
+}
+.header-sort__in-progress .fa-hourglass-half {
+  margin-left: 1rem;
+}
+.header-sort__done {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #66e35d7e;
+  font-family: "Shadows Into Light", cursive;
+  letter-spacing: 3px;
+  font-size: 2.2rem;
+  border-radius: 0px 24px 0px 0px;
+}
+.header-sort__done .fa-clipboard-check {
+  margin-left: 1rem;
+}
+
+.side-navbar {
+  background-color: #edf3fe;
+  padding: 2rem;
+  min-width: 14rem;
+}
+.side-navbar .navigation-container .nav-items {
+  font-family: "Poppins", sans-serif;
+  list-style-type: none;
+  font-size: 1.5rem;
+  color: #656565;
+}
+
+.task-main {
+  background: white;
+  background: linear-gradient(186deg, white 0%, #caf0f8 80%);
+}
+
+.task-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 2rem;
+}
+.task-main__ideas-box {
+  padding: 1.5rem;
+  margin-top: 0.8rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-family: "Luxurious Roman", cursive;
+}
+.task-main__ideas-box .ideas-checkbox {
+  margin-right: 0.8rem;
+}
+.task-main__in-progress-box {
+  padding: 1.5rem;
+  margin-top: 0.8rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-family: "Luxurious Roman", cursive;
+}
+.task-main__in-progress-box .in-progress-checkbox {
+  margin-right: 0.8rem;
+}
+.task-main__done-box {
+  padding: 1.5rem;
+  margin-top: 0.8rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-family: "Luxurious Roman", cursive;
+}
+.task-main__done-box .done-checkbox {
+  margin-right: 0.8rem;
+}
+
+.hidden {
+  display: none;
 }/*# sourceMappingURL=main.css.map */

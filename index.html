@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/f9c0780752.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="main.css" />
     <script type="module" defer src="controller.js"></script>
     <title>Your Own TODO App</title>
@@ -19,9 +23,12 @@
           </ul>
         </div>
         <div class="header">
-          <div class="header__img"></div>
+          <div class="header__img">
+            <h1 class="title-1">Your TODO List</h1>
+            <h1 class="title-2">Board</h1>
+          </div>
           <div class="header__search">
-            <label for="task-input">New Task</label>
+            <label for="task-input">New Task :</label>
             <input
               id="task-input"
               class="task-input"
@@ -29,11 +36,19 @@
               name="task"
               placeholder="Let's set up something.."
             />
+            <i class="fas fa-tasks"></i>
           </div>
           <div class="header-sort">
-            <div class="header-sort__ideas">Ideas</div>
-            <div class="header-sort__in-progress">In Progress</div>
-            <div class="header-sort__done">Done</div>
+            <div class="header-sort__ideas">
+              Ideas <i class="far fa-lightbulb"></i>
+            </div>
+            <div class="header-sort__in-progress">
+              In Progress
+              <i class="fas fa-hourglass-half"></i>
+            </div>
+            <div class="header-sort__done">
+              Done<i class="fas fa-clipboard-check"></i>
+            </div>
           </div>
         </div>
         <div class="task-main">
@@ -41,7 +56,11 @@
             <div class="task-main__ideas-box--1 task-main__ideas-box">
               <input class="ideas-checkbox--1 ideas-checkbox" type="checkbox" />
               <p class="ideas-text-preview--1 ideas-text-preview">Task1</p>
-              <p class="ideas-text-main--1 ideas-text-main"></p>
+              <p class="ideas-text-main--1 ideas-text-main hidden">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae
+                quisquam provident autem quidem iste laudantium repellendus
+                inventore iure voluptatibus odit!
+              </p>
             </div>
             <!-- <div class="task-main__ideas--2">Task2</div>
             <div class="task-main__ideas--3">Task3</div>

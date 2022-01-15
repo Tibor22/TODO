@@ -1,0 +1,53 @@
+.task-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 2rem;
+  &__ideas {
+    &-box {
+      padding: 1.5rem;
+      margin-top: 0.8rem;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+      font-family: $family-Luxurious;
+      .ideas-checkbox {
+        margin-right: 0.8rem;
+      }
+    }
+  }
+
+  &__in-progress {
+    &-box {
+      padding: 1.5rem;
+      margin-top: 0.8rem;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+      font-family: $family-Luxurious;
+      .in-progress-checkbox {
+        margin-right: 0.8rem;
+      }
+    }
+  }
+
+  &__done {
+    &-box {
+      padding: 1.5rem;
+      margin-top: 0.8rem;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+      font-family: $family-Luxurious;
+      .done-checkbox {
+        margin-right: 0.8rem;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
