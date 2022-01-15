@@ -7,6 +7,9 @@
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Tibor Toth",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.2.0"
+  }
 }

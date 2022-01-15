@@ -5,7 +5,73 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="main.css" />
+    <script type="module" defer src="controller.js"></script>
     <title>Your Own TODO App</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container-wrapper">
+      <div class="container">
+        <div class="side-navbar">
+          <ul class="navigation-container">
+            <li class="nav-items">Daily</li>
+            <li class="nav-items">Weekly</li>
+            <li class="nav-items">Monthly</li>
+          </ul>
+        </div>
+        <div class="header">
+          <div class="header__img"></div>
+          <div class="header__search">
+            <label for="task-input">New Task</label>
+            <input
+              id="task-input"
+              class="task-input"
+              type="text"
+              name="task"
+              placeholder="Let's set up something.."
+            />
+          </div>
+          <div class="header-sort">
+            <div class="header-sort__ideas">Ideas</div>
+            <div class="header-sort__in-progress">In Progress</div>
+            <div class="header-sort__done">Done</div>
+          </div>
+        </div>
+        <div class="task-main">
+          <div class="task-main__ideas">
+            <div class="task-main__ideas-box--1 task-main__ideas-box">
+              <input class="ideas-checkbox--1 ideas-checkbox" type="checkbox" />
+              <p class="ideas-text-preview--1 ideas-text-preview">Task1</p>
+              <p class="ideas-text-main--1 ideas-text-main"></p>
+            </div>
+            <!-- <div class="task-main__ideas--2">Task2</div>
+            <div class="task-main__ideas--3">Task3</div>
+            <div class="task-main__ideas--4">Task4</div>
+            <div class="task-main__ideas--5">Task5</div>
+            <div class="task-main__ideas--6">Task6</div> -->
+          </div>
+          <div class="task-main__in-progress">
+            <div
+              class="task-main__in-progress-box--1 task-main__in-progress-box"
+            >
+              <input
+                class="in-progress-checkbox--1 in-progress-checkbox"
+                type="checkbox"
+              />
+              <p class="in-progress-text-preview--1 in-progress-text-preview">
+                Task1
+              </p>
+              <p class="in-progress-text-main--1 in-progress-text-main"></p>
+            </div>
+          </div>
+          <div class="task-main__done">
+            <div class="task-main__done-box--1 task-main__done-box">
+              <input class="done-checkbox--1 done-checkbox" type="checkbox" />
+              <p class="done-text-preview--1 done-text-preview">Task1</p>
+              <p class="done-text-main--1 done-text-main"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
