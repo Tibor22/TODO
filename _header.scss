@@ -1,5 +1,8 @@
 .header {
   position: relative;
+  background-color: red;
+  // height: 90%;
+
   &__img {
     background-image: url(../images/header-img.jpg);
     height: 50%;
@@ -36,6 +39,7 @@
     align-items: flex-start;
     padding-top: 3.2vh;
     padding-left: 2rem;
+
     label {
       font-size: 3rem;
       margin-right: 2rem;
@@ -65,11 +69,13 @@
   &-sort {
     background-color: rgb(255, 255, 255);
     display: grid;
+
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 2rem;
 
-    height: 15%;
+    // height: 5rem;
     position: absolute;
+    // transform: translateY(-3rem);
     bottom: 0px;
     border-radius: 24px 24px 0px 0px;
     width: 100%;

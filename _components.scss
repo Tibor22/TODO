@@ -1,7 +1,10 @@
 .task-main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 45.2px;
   grid-gap: 2rem;
+  overflow-y: overlay;
+
   &__ideas {
     &-box {
       padding: 1.5rem;
@@ -11,7 +14,9 @@
       align-items: center;
       font-size: 1.3rem;
       font-family: $family-Luxurious;
-      .ideas-checkbox {
+      box-shadow: 6px 5px 13px -5px #00000048;
+
+      input[type="checkbox"] {
         margin-right: 0.8rem;
       }
     }
@@ -21,13 +26,16 @@
     &-box {
       padding: 1.5rem;
       margin-top: 0.8rem;
-      background-color: #fff;
+      background-color: rgb(255, 255, 255);
       display: flex;
       align-items: center;
       font-size: 1.3rem;
       font-family: $family-Luxurious;
+      box-shadow: 6px 5px 13px -5px #00000048;
       .in-progress-checkbox {
         margin-right: 0.8rem;
+      }
+      p {
       }
     }
   }
@@ -41,6 +49,7 @@
       align-items: center;
       font-size: 1.3rem;
       font-family: $family-Luxurious;
+      box-shadow: 6px 5px 13px -5px #00000048;
       .done-checkbox {
         margin-right: 0.8rem;
       }
@@ -50,4 +59,36 @@
 
 .hidden {
   display: none;
+}
+
+// -------------------CHECKBOX-------------------//
+input[type="checkbox"] {
+  position: relative;
+  cursor: pointer;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    border: 2px solid $color-green;
+    border-radius: 3px;
+    background-color: white;
+  }
+  &:checked:after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid $color-green;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+    left: 6px;
+  }
 }
