@@ -4,11 +4,11 @@ export default class Task {
 
   _taskMain = document.querySelector(".task-main");
   _todoContainer = document.querySelector(".container");
-  _inProgress = [];
+  _taskArr = [];
   _taskName = "in-progress";
   _isFull = false;
   _currProgressTask = 0;
-  _done = [];
+
   _checkboxArray = [];
   _inputFromUser = document.querySelector(".task-input");
   _parentElement2 = document.querySelector(".task-main__done");
@@ -46,8 +46,8 @@ export default class Task {
     this._uniqueNum = Date.now();
   }
 
-  _renderInProgress() {
-    this._inProgress = this._inProgress.map((task) => {
+  _renderInProgress(taskArr) {
+    this._taskArr = taskArr.map((task) => {
       this._currProgressTask++;
 
       task = task.replaceAll("ideas", "in-progress");
@@ -55,8 +55,8 @@ export default class Task {
       return task;
     });
 
-    this._inProgress.forEach((htmlNode, i) => {
-      if (i === this._inProgress.length - 1)
+    this._taskArr.forEach((htmlNode, i) => {
+      if (i === this._taskArr.length - 1)
         this._parentElement1.insertAdjacentHTML("beforeend", htmlNode);
     });
 
@@ -73,7 +73,7 @@ export default class Task {
   _removeTaskAndAddToProgress1(e) {
     const currentTaskNumber = e.target.closest(".task-main__in-progress-box")
       .dataset.number;
-    this._inProgress = this._inProgress.filter((progress, i) => {
+    this._taskArr = this._taskArr.filter((progress, i) => {
       let thenum = progress.match(/\d+/)[0];
 
       console.log(thenum, currentTaskNumber);
@@ -82,27 +82,27 @@ export default class Task {
     });
     setTimeout(() => {
       this._parentElement1.innerHTML = "";
-      this._inProgress.forEach((htmlNode, i) => {
+      this._taskArr.forEach((htmlNode, i) => {
         this._parentElement1.insertAdjacentHTML("beforeend", htmlNode);
       });
     }, 300);
 
-    // console.log(this._inProgress);
+    // console.log(this._taskArr);
     this._renderDone();
     this._setLocalStorage1();
   }
 
   _setLocalStorage1() {
-    localStorage.setItem("progress", JSON.stringify(this._inProgress));
+    localStorage.setItem("progress", JSON.stringify(this._taskArr));
   }
 
   _getFromLocalStorage1() {
     console.log("dadsa");
-    console.log(this._inProgress);
+    console.log(this._taskArr);
     let data = JSON.parse(localStorage.getItem("progress"));
     if (!data) return;
-    this._inProgress = data;
-    this._inProgress.forEach((htmlNode, i) => {
+    this._taskArr = data;
+    this._taskArr.forEach((htmlNode, i) => {
       this._parentElement1.insertAdjacentHTML("beforeend", htmlNode);
     });
   }
@@ -150,7 +150,7 @@ export default class Task {
       });
     }, 300);
 
-    // console.log(this._inProgress);
+    // console.log(this._taskArr);
 
     this._setLocalStorage2();
   }

@@ -7,6 +7,7 @@ class ideasTask extends Task {
   _labelName = "ideas";
   _uniqueNum;
   _currIdeasTask = 0;
+  _nextTask = [];
   constructor() {
     super();
     this._getFromLocalStorage();
@@ -23,7 +24,7 @@ class ideasTask extends Task {
     this._inputFromUser.value = "";
     const html = `<div class="task-main__ideas-box--${this._uniqueNum} task-main__ideas-box" data-number='${this._uniqueNum}'>
     <input class="ideas-checkbox--${this._uniqueNum} ideas-checkbox" type="checkbox" />
-    <p class="ideas-text-preview--${this._uniqueNum} ideas-text-preview">${text}</p>
+    <p contenteditable="true" class="ideas-text-preview--${this._uniqueNum} ideas-text-preview">${text}</p>
   </div>`;
     console.log(this._ideasArray);
     this._ideasArray.push(html);
@@ -49,7 +50,7 @@ class ideasTask extends Task {
 
       console.log(thenum, currentTaskNumber);
       if (thenum !== currentTaskNumber) return ideas;
-      else this._inProgress.push(ideas);
+      else this._nextTask.push(ideas);
     });
     setTimeout(() => {
       this._parentElement.innerHTML = "";
@@ -59,7 +60,7 @@ class ideasTask extends Task {
     }, 300);
 
     console.log(this._inProgress);
-    this._renderInProgress();
+    this._renderInProgress(this._nextTask);
     this._setLocalStorage();
   }
 
@@ -78,3 +79,7 @@ class ideasTask extends Task {
 }
 
 export default new ideasTask();
+
+console.log("fdsfdsdsfdsf");
+console.log("fdsfdsdsfdsf");
+console.log("fdsfdsdsfdsf");
