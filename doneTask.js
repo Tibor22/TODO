@@ -1,5 +1,3 @@
-import Task from "./task.js";
-
 class DoneTask extends Task {
   _inputFromUser = document.querySelector(".task-input");
   _parentElement2 = document.querySelector(".task-main__done");
