@@ -1,30 +1,61 @@
 // const inputFromUser = document.querySelector(".task-input");
 
 class Task {
-  constructor(name, id, text) {
+  constructor(name, id, text, mainContainer) {
     this.name = name;
     this.id = id;
     this.text = text;
-    this.taskArr = [];
+    // this.taskArr = [];
+    this.mainContainer = mainContainer;
+  }
+
+  getParentIdeas() {
+    let parent = document.querySelector(`${this.mainContainer}`);
+    let child = parent.querySelector(".task-main__ideas");
+    return child;
+  }
+  getParentProgress() {
+    let parent = document.querySelector(`${this.mainContainer}`);
+    let child = parent.querySelector(".task-main__in-progress");
+
+    return child;
+  }
+  getParentDone() {
+    let parent = document.querySelector(`${this.mainContainer}`);
+    let child = parent.querySelector(".task-main__done");
+    return child;
   }
 }
 
 class Ideas extends Task {
-  parentElement = document.querySelector(".task-main__ideas");
-  _checkboxArray = [];
+  // parentElement = this.mainContainer;
+  // // .querySelector(".task-main__ideas");
+  // // _checkboxArray = [];
+
+  parentElement = this.getParentIdeas();
 }
 
 class Progress extends Task {
-  parentElement = document.querySelector(".task-main__in-progress");
+  parentElement = this.getParentProgress();
+  // parentElement = this.mainContainer;
+  // .querySelector(".task-main__in-progress");
 }
 
 class Done extends Task {
-  parentElement = document.querySelector(".task-main__done");
+  parentElement = this.getParentDone();
+  // parentElement = this.mainContainer.firstElementChild;
+  // .querySelector(".task-main__done");
 }
 
 class App {
+  // daily = document.querySelector(".daily");
+  // monthly = document.querySelector(".monthly");
+  // weekly = document.querySelector(".weekly");
+
   _inputFromUser = document.querySelector(".task-input");
-  _taskMain = document.querySelector(".task-main");
+  _taskMain = document.querySelectorAll(".task-main");
+  _navigationContainer = document.querySelector(".navigation-container");
+  _navArr = document.querySelectorAll(".nav-items");
   _ideasArr = [];
   _progressArr = [];
   _doneArr = [];
@@ -34,17 +65,51 @@ class App {
   _uniqueNum;
   _currDoneTask = 0;
   _progressCounter = 0;
+  _time;
 
   constructor() {
     this._getFromLocalStorage();
+    this._init();
+    this._navigationContainer.addEventListener(
+      "click",
+      this._createTime.bind(this)
+    );
     this._inputFromUser.addEventListener(
       "keyup",
       this._getInputFromUser.bind(this)
     );
-    this._taskMain.addEventListener(
-      "change",
-      this._removeTaskAndAddNext.bind(this)
-    );
+    this._taskMain.forEach((task) => {
+      task.addEventListener("change", this._removeTaskAndAddNext.bind(this));
+    });
+  }
+
+  _createTime(e) {
+    this._time = "." + e.target.innerText.toLowerCase();
+
+    if (this._time === ".daily") {
+      document.querySelector(".weekly").style.display = "none";
+      document.querySelector(".monthly").style.display = "none";
+      document.querySelector(".daily").style.display = "grid";
+      this._navArr[0].style.backgroundColor = "white";
+      this._navArr[1].style.backgroundColor = "";
+      this._navArr[2].style.backgroundColor = "";
+    }
+    if (this._time === ".weekly") {
+      document.querySelector(".weekly").style.display = "grid";
+      document.querySelector(".monthly").style.display = "none";
+      document.querySelector(".daily").style.display = "none";
+      this._navArr[1].style.backgroundColor = "white";
+      this._navArr[0].style.backgroundColor = "";
+      this._navArr[2].style.backgroundColor = "";
+    }
+    if (this._time === ".monthly") {
+      document.querySelector(".weekly").style.display = "none";
+      document.querySelector(".monthly").style.display = "grid";
+      document.querySelector(".daily").style.display = "none";
+      this._navArr[0].style.backgroundColor = "";
+      this._navArr[1].style.backgroundColor = "";
+      this._navArr[2].style.backgroundColor = "white";
+    }
   }
 
   // METHODS
@@ -75,9 +140,9 @@ class App {
       let id = this._generateUniqueNumber();
       let task;
 
-      task = new Ideas("ideas", id, text);
+      task = new Ideas("ideas", id, text, this._time);
 
-      // Add task object to taskArr
+      // Add task object to ideasArr
       this._ideasArr.push(task);
 
       // insert new task in HTML
@@ -94,6 +159,7 @@ class App {
     <input class="${task.name}-checkbox--${task.id} ${task.name}-checkbox" type="checkbox" />
     <p contenteditable="true" class="${task.name}-text-preview--${task.id} ${task.name}-text-preview">${task.text}</p>
   </div>`;
+    console.log(task.parentElement, task);
     task.parentElement.insertAdjacentHTML("beforeend", html);
     task.description = html;
   }
@@ -102,8 +168,8 @@ class App {
       if (arr[i].id === obj.id) {
         let arr1 =
           arr[arr.length - 1].name === "ideas"
-            ? new Progress(`${newName}`, obj.id, obj.text)
-            : new Done(`${newName}`, obj.id, obj.text);
+            ? new Progress(`${newName}`, obj.id, obj.text, this._time)
+            : new Done(`${newName}`, obj.id, obj.text, this._time);
         arr1.description = obj.description.replaceAll(
           `${oldName}`,
           `${newName}`
@@ -119,9 +185,19 @@ class App {
 
   _delayAndRenderToHTML(parentEl, arr) {
     setTimeout(() => {
-      parentEl.innerHTML = "";
+      console.log(parentEl);
+      // parentEl.innerHTML = "";
+      console.log(parentEl.classList[0]);
+      document.querySelectorAll(`.${parentEl.classList[0]}`).forEach((task) => {
+        task.innerHTML = "";
+      });
+      // this._insertHTML(arr[0]);
+
       arr.forEach((htmlNode, i) => {
+        // if (i === arr.length - 1) {
+        //   console.log(htmlNode);
         this._insertHTML(htmlNode);
+        // }
       });
     }, 300);
   }
@@ -129,23 +205,43 @@ class App {
   _filterArrAndRemove(oldArr, newArr, currentTaskNumber) {
     oldArr = oldArr.filter((obj, i) => {
       let thenum = obj.id;
+      console.log(obj, currentTaskNumber);
       if (thenum !== +currentTaskNumber) return obj;
       else newArr === "_" ? null : newArr.push(obj);
     });
+    console.log(oldArr);
     return oldArr;
   }
 
   _removeTaskAndAddNext(e) {
-    const currentTaskNumber =
+    let currentTaskNumber =
       e.target.closest(`.task-main__ideas-box`)?.dataset.number ||
       e.target.closest(`.task-main__in-progress-box`)?.dataset.number ||
       e.target.closest(`.task-main__done-box`)?.dataset.number;
-    let parentProgress = this._progressArr[0]?.parentElement;
-    let parentDone = this._doneArr[0]?.parentElement;
-    let parentIdeas = this._ideasArr[0]?.parentElement;
+
+    const currentIdeas = this._ideasArr.filter((obj, i) => {
+      currentTaskNumber = +currentTaskNumber;
+
+      if (currentTaskNumber === obj.id) return obj;
+    });
+    const currentProgress = this._progressArr.filter((obj, i) => {
+      currentTaskNumber = +currentTaskNumber;
+
+      if (currentTaskNumber === obj.id) return obj;
+    });
+    const currentDone = this._doneArr.filter((obj, i) => {
+      currentTaskNumber = +currentTaskNumber;
+
+      if (currentTaskNumber === obj.id) return obj;
+    });
+
+    let parentIdeas = currentIdeas[0]?.parentElement;
+    let parentProgress = currentProgress[0]?.parentElement;
+    let parentDone = currentDone[0]?.parentElement;
     let checkWhichContainer = e.target.parentElement.outerHTML;
 
     if (checkWhichContainer.includes("ideas")) {
+      console.log("right");
       //REMOVE CLICKED OBJ
       this._ideasArr = this._filterArrAndRemove(
         this._ideasArr,
@@ -187,6 +283,8 @@ class App {
       this._delayAndRenderToHTML(parentDone, this._doneArr);
     }
     this._setLocalStorage("done", this._doneArr);
+
+    console.log(this._ideasArr);
   }
 
   _setLocalStorage(name, arr) {
@@ -201,22 +299,63 @@ class App {
     if (!dataIdeas || !dataProgress || !dataDone) return;
     this._ideasArr = dataIdeas;
     dataIdeas?.forEach((htmlNode, i) => {
-      htmlNode.parentElement = document.querySelector(".task-main__ideas");
+      const parentArr = document.querySelectorAll(".task-main__ideas");
+      console.log(parentArr);
+      if (htmlNode.mainContainer === ".daily") {
+        htmlNode.parentElement = document.querySelector(".daily-ideas");
+      }
+      if (htmlNode.mainContainer === ".weekly") {
+        htmlNode.parentElement = document.querySelector(".weekly-ideas");
+      }
+      if (htmlNode.mainContainer === ".monthly") {
+        htmlNode.parentElement = document.querySelector(".monthly-ideas");
+      }
+      console.log(htmlNode.parentElement);
       this._insertHTML(htmlNode);
     });
     this._progressArr = dataProgress;
     dataProgress?.forEach((htmlNode, i) => {
-      htmlNode.parentElement = document.querySelector(
-        ".task-main__in-progress"
-      );
+      // htmlNode.parentElement = document.querySelector(
+      //   ".task-main__in-progress"
+      // );
+      if (htmlNode.mainContainer === ".daily") {
+        htmlNode.parentElement = document.querySelector(".daily-in-progress");
+      }
+      if (htmlNode.mainContainer === ".weekly") {
+        htmlNode.parentElement = document.querySelector(".weekly-in-progress");
+      }
+      if (htmlNode.mainContainer === ".monthly") {
+        htmlNode.parentElement = document.querySelector(".monthly-in-progress");
+      }
       this._insertHTML(htmlNode);
     });
     this._doneArr = dataDone;
     dataDone?.forEach((htmlNode, i) => {
-      htmlNode.parentElement = document.querySelector(".task-main__done");
+      if (htmlNode.mainContainer === ".daily") {
+        htmlNode.parentElement = document.querySelector(".daily-done");
+      }
+      if (htmlNode.mainContainer === ".weekly") {
+        htmlNode.parentElement = document.querySelector(".weekly-done");
+      }
+      if (htmlNode.mainContainer === ".monthly") {
+        htmlNode.parentElement = document.querySelector(".monthly-done");
+      }
       this._insertHTML(htmlNode);
     });
   }
+
+  _init() {
+    document.querySelector(".weekly").style.display = "none";
+    document.querySelector(".monthly").style.display = "none";
+    document.querySelector(".daily").style.display = "grid";
+    this._navArr[0].style.backgroundColor = "white";
+    this._navArr[1].style.backgroundColor = "";
+    this._navArr[2].style.backgroundColor = "";
+  }
 }
 
-const app = new App();
+// console.log(daily, weekly, monthly);
+
+const appDaily = new App();
+
+console.log(appDaily);
