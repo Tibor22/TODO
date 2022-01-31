@@ -10,6 +10,11 @@
 html {
   font-size: 62.5%;
 }
+@media screen and (max-width: 700px) {
+  html {
+    font-size: 50%;
+  }
+}
 
 .container-wrapper {
   width: 100%;
@@ -27,6 +32,26 @@ html {
   display: grid;
   grid-template-areas: "side header header header" "side header header header" "side main main    main" "side main main    main" "side main main    main" "side main main    main";
   grid-template-columns: 18rem 1fr 1fr 1fr;
+}
+@media screen and (max-width: 1000px) {
+  .container-wrapper .container {
+    width: 85%;
+    height: 85%;
+    grid-template-rows: 20rem 7rem repeat(4, auto);
+  }
+}
+@media screen and (max-width: 810px) {
+  .container-wrapper .container {
+    width: 100vw;
+    height: 100vh;
+    grid-template-rows: 20rem 7rem repeat(4, auto);
+  }
+}
+@media screen and (max-width: 700px) {
+  .container-wrapper .container {
+    max-width: 100rem;
+    grid-template-rows: 20rem 10rem repeat(4, auto);
+  }
 }
 
 .header {
