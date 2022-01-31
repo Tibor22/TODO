@@ -56,6 +56,7 @@ class App {
   _taskMain = document.querySelectorAll(".task-main");
   _navigationContainer = document.querySelector(".navigation-container");
   _navArr = document.querySelectorAll(".nav-items");
+  _delete = document.querySelector(".delete");
   _ideasArr = [];
   _progressArr = [];
   _doneArr = [];
@@ -65,7 +66,7 @@ class App {
   _uniqueNum;
   _currDoneTask = 0;
   _progressCounter = 0;
-  _time;
+  _time = ".daily";
 
   constructor() {
     this._getFromLocalStorage();
@@ -80,6 +81,9 @@ class App {
     );
     this._taskMain.forEach((task) => {
       task.addEventListener("change", this._removeTaskAndAddNext.bind(this));
+    });
+    this._taskMain.forEach((task) => {
+      task.addEventListener("click", this._deleteTask.bind(this));
     });
   }
 
@@ -158,18 +162,21 @@ class App {
     const html = `<div class="task-main__${task.name}-box--${task.id} task-main__${task.name}-box" data-number='${task.id}'>
     <input class="${task.name}-checkbox--${task.id} ${task.name}-checkbox" type="checkbox" />
     <p contenteditable="true" class="${task.name}-text-preview--${task.id} ${task.name}-text-preview">${task.text}</p>
+    <div class='delete'><i class="fas fa-times"></i></div>
   </div>`;
-    console.log(task.parentElement, task);
+    // console.log(task.parentElement, task);
     task.parentElement.insertAdjacentHTML("beforeend", html);
     task.description = html;
   }
   _createObj(arr, oldName, newName) {
+    console.log(`YES I AM HERE`);
     arr = arr.map((obj, i) => {
+      console.log("START:", obj);
       if (arr[i].id === obj.id) {
         let arr1 =
           arr[arr.length - 1].name === "ideas"
-            ? new Progress(`${newName}`, obj.id, obj.text, this._time)
-            : new Done(`${newName}`, obj.id, obj.text, this._time);
+            ? new Progress(`${newName}`, obj.id, obj.text, obj.mainContainer)
+            : new Done(`${newName}`, obj.id, obj.text, obj.mainContainer);
         arr1.description = obj.description.replaceAll(
           `${oldName}`,
           `${newName}`
@@ -177,6 +184,7 @@ class App {
         if (arr.length - 1 === i) {
           this._insertHTML(arr1);
         }
+        console.log("END:", obj);
         return arr1;
       }
     });
@@ -185,31 +193,37 @@ class App {
 
   _delayAndRenderToHTML(parentEl, arr) {
     setTimeout(() => {
-      console.log(parentEl);
-      // parentEl.innerHTML = "";
-      console.log(parentEl.classList[0]);
+      console.log("-------------------------------------------------------");
+      // console.log(parentEl);
+      // // parentEl.innerHTML = "";
+      // console.log(parentEl.classList[0]);
+      console.log(arr);
+      // parentEl.classList[0]
       document.querySelectorAll(`.${parentEl.classList[0]}`).forEach((task) => {
         task.innerHTML = "";
       });
       // this._insertHTML(arr[0]);
-
+      console.log(arr);
       arr.forEach((htmlNode, i) => {
         // if (i === arr.length - 1) {
         //   console.log(htmlNode);
+        console.log(htmlNode);
         this._insertHTML(htmlNode);
+
         // }
       });
-    }, 300);
+    }, 100);
+    console.log("-------------------------------------------");
   }
 
   _filterArrAndRemove(oldArr, newArr, currentTaskNumber) {
     oldArr = oldArr.filter((obj, i) => {
       let thenum = obj.id;
-      console.log(obj, currentTaskNumber);
+
       if (thenum !== +currentTaskNumber) return obj;
       else newArr === "_" ? null : newArr.push(obj);
     });
-    console.log(oldArr);
+
     return oldArr;
   }
 
@@ -283,63 +297,106 @@ class App {
       this._delayAndRenderToHTML(parentDone, this._doneArr);
     }
     this._setLocalStorage("done", this._doneArr);
+  }
 
-    console.log(this._ideasArr);
+  _deleteTask(e) {
+    console.log(e.target);
+    if (e.target.classList[0] === "fas") {
+      let currentTaskNumber =
+        e.target.closest(`.task-main__ideas-box`)?.dataset.number ||
+        e.target.closest(`.task-main__in-progress-box`)?.dataset.number ||
+        e.target.closest(`.task-main__done-box`)?.dataset.number;
+      console.log(this._ideasArr);
+      console.log(currentTaskNumber);
+      let parentIdeas = this._ideasArr[0]?.parentElement;
+      let parentProgress = this._progressArr[0]?.parentElement;
+      let parentDone = this._doneArr[0]?.parentElement;
+
+      this._ideasArr = this._ideasArr.filter((obj, i) => {
+        currentTaskNumber = +currentTaskNumber;
+        console.log(currentTaskNumber, obj.id);
+        if (currentTaskNumber !== obj.id) return obj;
+        else return "";
+      });
+
+      this._progressArr = this._progressArr.filter((obj, i) => {
+        currentTaskNumber = +currentTaskNumber;
+
+        if (currentTaskNumber !== obj.id) return obj;
+      });
+      this._doneArr = this._doneArr.filter((obj, i) => {
+        currentTaskNumber = +currentTaskNumber;
+
+        if (currentTaskNumber !== obj.id) return obj;
+      });
+      console.log(e.target.parentNode.parentElement.outerHTML);
+      let checkWhichContainer = e.target.parentNode.parentElement.outerHTML;
+      if (checkWhichContainer.includes("ideas")) {
+        console.log("right");
+        if (this._ideasArr.length > 0) {
+          this._delayAndRenderToHTML(parentIdeas, this._ideasArr);
+        } else {
+          parentIdeas.innerHTML = "";
+        }
+        this._setLocalStorage("ideas", this._ideasArr);
+      }
+      if (checkWhichContainer.includes("in-progress")) {
+        console.log(this._progressArr);
+        console.log("left");
+        if (this._progressArr.length > 0) {
+          this._delayAndRenderToHTML(parentProgress, this._progressArr);
+        } else {
+          parentProgress.innerHTML = "";
+        }
+        this._setLocalStorage("in-progress", this._progressArr);
+      }
+      if (checkWhichContainer.includes("done")) {
+        console.log("forward");
+        if (this._doneArr.length > 0) {
+          this._delayAndRenderToHTML(parentDone, this._doneArr);
+        } else {
+          parentDone.innerHTML = "";
+        }
+        this._setLocalStorage("done", this._doneArr);
+      }
+    }
   }
 
   _setLocalStorage(name, arr) {
     localStorage.setItem(`${name}`, JSON.stringify(arr));
   }
 
+  _setLocalStorageParentEl(htmlNode, time, name) {
+    if (htmlNode.mainContainer === `${time}`) {
+      htmlNode.parentElement = document.querySelector(`${time}-${name}`);
+    }
+  }
+
   _getFromLocalStorage() {
     let dataIdeas = JSON.parse(localStorage.getItem("ideas"));
     let dataProgress = JSON.parse(localStorage.getItem("in-progress"));
     let dataDone = JSON.parse(localStorage.getItem("done"));
-    console.log(dataIdeas, dataProgress, dataDone);
+
     if (!dataIdeas || !dataProgress || !dataDone) return;
     this._ideasArr = dataIdeas;
     dataIdeas?.forEach((htmlNode, i) => {
-      const parentArr = document.querySelectorAll(".task-main__ideas");
-      console.log(parentArr);
-      if (htmlNode.mainContainer === ".daily") {
-        htmlNode.parentElement = document.querySelector(".daily-ideas");
-      }
-      if (htmlNode.mainContainer === ".weekly") {
-        htmlNode.parentElement = document.querySelector(".weekly-ideas");
-      }
-      if (htmlNode.mainContainer === ".monthly") {
-        htmlNode.parentElement = document.querySelector(".monthly-ideas");
-      }
-      console.log(htmlNode.parentElement);
+      this._setLocalStorageParentEl(htmlNode, ".daily", "ideas");
+      this._setLocalStorageParentEl(htmlNode, ".weekly", "ideas");
+      this._setLocalStorageParentEl(htmlNode, ".monthly", "ideas");
       this._insertHTML(htmlNode);
     });
     this._progressArr = dataProgress;
     dataProgress?.forEach((htmlNode, i) => {
-      // htmlNode.parentElement = document.querySelector(
-      //   ".task-main__in-progress"
-      // );
-      if (htmlNode.mainContainer === ".daily") {
-        htmlNode.parentElement = document.querySelector(".daily-in-progress");
-      }
-      if (htmlNode.mainContainer === ".weekly") {
-        htmlNode.parentElement = document.querySelector(".weekly-in-progress");
-      }
-      if (htmlNode.mainContainer === ".monthly") {
-        htmlNode.parentElement = document.querySelector(".monthly-in-progress");
-      }
+      this._setLocalStorageParentEl(htmlNode, ".daily", "in-progress");
+      this._setLocalStorageParentEl(htmlNode, ".weekly", "in-progress");
+      this._setLocalStorageParentEl(htmlNode, ".monthly", "in-progress");
       this._insertHTML(htmlNode);
     });
     this._doneArr = dataDone;
     dataDone?.forEach((htmlNode, i) => {
-      if (htmlNode.mainContainer === ".daily") {
-        htmlNode.parentElement = document.querySelector(".daily-done");
-      }
-      if (htmlNode.mainContainer === ".weekly") {
-        htmlNode.parentElement = document.querySelector(".weekly-done");
-      }
-      if (htmlNode.mainContainer === ".monthly") {
-        htmlNode.parentElement = document.querySelector(".monthly-done");
-      }
+      this._setLocalStorageParentEl(htmlNode, ".daily", "done");
+      this._setLocalStorageParentEl(htmlNode, ".weekly", "done");
+      this._setLocalStorageParentEl(htmlNode, ".monthly", "done");
       this._insertHTML(htmlNode);
     });
   }

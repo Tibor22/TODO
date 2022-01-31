@@ -39,9 +39,8 @@ html {
       "side main main    main"
       "side main main    main"
       "side main main    main";
+    grid-template-columns: 18rem 1fr 1fr 1fr;
   }
-
-  // grid-template-columns: minmax(min-content, 30rem) 1fr 1fr;
 }
 
 .header {

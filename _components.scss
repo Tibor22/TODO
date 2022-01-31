@@ -7,6 +7,8 @@
 
   &__ideas {
     &-box {
+      position: relative;
+      max-width: 100%;
       padding: 1.5rem;
       margin-top: 0.8rem;
       background-color: #fff;
@@ -15,15 +17,28 @@
       font-size: 1.3rem;
       font-family: $family-Luxurious;
       box-shadow: 6px 5px 13px -5px #00000048;
-
+      background-color: #f8de7e60;
       input[type="checkbox"] {
-        margin-right: 0.8rem;
+        margin-right: 1.2rem;
+      }
+      & .delete {
+        position: absolute;
+        top: 3px;
+        right: 7px;
+        cursor: pointer;
+        font-size: 1.4rem;
+        transition: all 0.2s;
+        &:hover {
+          color: red;
+          transform: scale(1.2);
+        }
       }
     }
   }
 
   &__in-progress {
     &-box {
+      position: relative;
       padding: 1.5rem;
       margin-top: 0.8rem;
       background-color: rgb(255, 255, 255);
@@ -32,16 +47,27 @@
       font-size: 1.3rem;
       font-family: $family-Luxurious;
       box-shadow: 6px 5px 13px -5px #00000048;
+      background-color: #c5d6f860;
       .in-progress-checkbox {
-        margin-right: 0.8rem;
+        margin-right: 1.2rem;
       }
-      p {
+      & .delete {
+        position: absolute;
+        top: 3px;
+        right: 7px;
+        cursor: pointer;
+        font-size: 1.4rem;
+        transition: all 0.2s;
+        &:hover {
+          color: red;
+        }
       }
     }
   }
 
   &__done {
     &-box {
+      position: relative;
       padding: 1.5rem;
       margin-top: 0.8rem;
       background-color: #fff;
@@ -50,8 +76,21 @@
       font-size: 1.3rem;
       font-family: $family-Luxurious;
       box-shadow: 6px 5px 13px -5px #00000048;
+      background-color: #66e35d54;
       .done-checkbox {
-        margin-right: 0.8rem;
+        margin-right: 1.2rem;
+      }
+      & .delete {
+        position: absolute;
+        top: 3px;
+        right: 7px;
+        cursor: pointer;
+        font-size: 1.4rem;
+        transition: all 0.2s;
+        &:hover {
+          color: red;
+          transform: scale(1.2);
+        }
       }
     }
   }

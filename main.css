@@ -26,6 +26,7 @@ html {
   max-width: 80rem;
   display: grid;
   grid-template-areas: "side header header header" "side header header header" "side main main    main" "side main main    main" "side main main    main" "side main main    main";
+  grid-template-columns: 18rem 1fr 1fr 1fr;
 }
 
 .header {
@@ -152,7 +153,7 @@ html {
 .side-navbar {
   background-color: #edf3fe;
   padding: 2rem;
-  min-width: 14rem;
+  min-width: 18rem;
 }
 .side-navbar .navigation-container .nav-items {
   font-family: "Poppins", sans-serif;
@@ -179,6 +180,8 @@ html {
   overflow-y: overlay;
 }
 .task-main__ideas-box {
+  position: relative;
+  max-width: 100%;
   padding: 1.5rem;
   margin-top: 0.8rem;
   background-color: #fff;
@@ -187,11 +190,25 @@ html {
   font-size: 1.3rem;
   font-family: "Luxurious Roman", cursive;
   box-shadow: 6px 5px 13px -5px #00000048;
+  background-color: #f8de7e60;
 }
 .task-main__ideas-box input[type=checkbox] {
-  margin-right: 0.8rem;
+  margin-right: 1.2rem;
+}
+.task-main__ideas-box .delete {
+  position: absolute;
+  top: 3px;
+  right: 7px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: all 0.2s;
+}
+.task-main__ideas-box .delete:hover {
+  color: red;
+  transform: scale(1.2);
 }
 .task-main__in-progress-box {
+  position: relative;
   padding: 1.5rem;
   margin-top: 0.8rem;
   background-color: white;
@@ -200,11 +217,24 @@ html {
   font-size: 1.3rem;
   font-family: "Luxurious Roman", cursive;
   box-shadow: 6px 5px 13px -5px #00000048;
+  background-color: #c5d6f860;
 }
 .task-main__in-progress-box .in-progress-checkbox {
-  margin-right: 0.8rem;
+  margin-right: 1.2rem;
+}
+.task-main__in-progress-box .delete {
+  position: absolute;
+  top: 3px;
+  right: 7px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: all 0.2s;
+}
+.task-main__in-progress-box .delete:hover {
+  color: red;
 }
 .task-main__done-box {
+  position: relative;
   padding: 1.5rem;
   margin-top: 0.8rem;
   background-color: #fff;
@@ -213,9 +243,22 @@ html {
   font-size: 1.3rem;
   font-family: "Luxurious Roman", cursive;
   box-shadow: 6px 5px 13px -5px #00000048;
+  background-color: #66e35d54;
 }
 .task-main__done-box .done-checkbox {
-  margin-right: 0.8rem;
+  margin-right: 1.2rem;
+}
+.task-main__done-box .delete {
+  position: absolute;
+  top: 3px;
+  right: 7px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: all 0.2s;
+}
+.task-main__done-box .delete:hover {
+  color: red;
+  transform: scale(1.2);
 }
 
 .hidden {
