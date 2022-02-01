@@ -4,6 +4,9 @@
   grid-auto-rows: 45.2px;
   grid-gap: 2rem;
   overflow-y: overlay;
+  @media screen and(max-width: 450px) {
+    margin-top: 4.3rem;
+  }
 
   &__ideas {
     &-box {

@@ -1,5 +1,7 @@
 // const inputFromUser = document.querySelector(".task-input");
 
+import * as UI from "/UI.js";
+
 class Task {
   constructor(name, id, text, mainContainer) {
     this.name = name;
