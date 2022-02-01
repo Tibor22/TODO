@@ -1,6 +1,18 @@
 // const inputFromUser = document.querySelector(".task-input");
 
-import * as UI from "/UI.js";
+let nav = document.querySelector(".btn-background");
+let sideNavbar = document.querySelector(".side-navbar");
+let navBtn = document.querySelector(".btn-close");
+
+nav.addEventListener("click", function (e) {
+  sideNavbar.style.transform = `translateX(${0}%)`;
+  sideNavbar.style.display = "unset";
+  navBtn.classList.toggle("nav-anim");
+
+  if (!navBtn.classList.contains("nav-anim")) {
+    sideNavbar.style.transform = `translateX(-${100}%)`;
+  }
+});
 
 class Task {
   constructor(name, id, text, mainContainer) {
