@@ -77,7 +77,7 @@ html {
 
 .header {
   position: relative;
-  background-color: red;
+  background-color: yellow;
 }
 .header__img {
   background-image: url(../../images/header-img.jpg);
